@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fetch from 'node-fetch';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -29,14 +28,15 @@ export async function GET(req: NextRequest) {
   }
 
   const url = new URL(targetUrl);
-  url.search = params;
+  
+  if (params) {
+    url.search = params;
+  }
 
   try {
     const response = await fetch(url, {
       method,
       headers: buildHeaders(req.headers, targetUrl),
-      redirect: 'follow',
-      follow: 15,
     });
 
     const contentType = response.headers.get('content-type') || '';
