@@ -35,6 +35,8 @@ export async function GET(req: NextRequest) {
     const response = await fetch(url, {
       method,
       headers: buildHeaders(req.headers, targetUrl),
+      redirect: 'follow',
+      follow: 15,
     });
 
     const contentType = response.headers.get('content-type') || '';
