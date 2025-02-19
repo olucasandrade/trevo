@@ -17,7 +17,7 @@ export const ParamsSection = ({ params, onAddParam, onRemoveParam, onUpdateParam
   return (
     <div className="space-y-2">
       {params.map((param, index) => (
-        <div key={index} className="flex gap-2">
+        <div key={index} className="flex flex-col md:flex-row gap-2">
           <Input
             placeholder="Key"
             value={param.key}

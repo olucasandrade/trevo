@@ -25,7 +25,7 @@ export const HeadersSection = ({ headers, onAddHeader, onRemoveHeader, onUpdateH
   return (
     <div className="space-y-2">
       {headers.map((header, index) => (
-        <div key={index} className="flex gap-2">
+        <div key={index} className="flex flex-col md:flex-row gap-2">
           <Select
             value={header.key}
             onChange={(value) => onUpdateHeader(index, 'key', value!)}
