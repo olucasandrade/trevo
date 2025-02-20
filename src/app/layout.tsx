@@ -2,7 +2,7 @@
 import { GeistSans } from 'geist/font/sans';
 import '@mantine/core/styles.css';
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/react"
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from './theme';
@@ -27,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <QueryClientProvider client={queryClient}>
         <MantineProvider theme={theme} cssVariablesResolver={cssVariableResolver}>
           <ToastContainer theme='dark' autoClose={3000} />
+          <Analytics />
           {children}
         </MantineProvider>
       </QueryClientProvider>
