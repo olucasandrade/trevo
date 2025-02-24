@@ -1,13 +1,14 @@
 "use client"
 
-import { AppShell, Burger, Group, NavLink, Text, Title, useMantineColorScheme } from '@mantine/core';
-import { IconChevronRight, IconLeaf2 } from '@tabler/icons-react'
-import { HistoryItem, useRequestHistory } from './hooks/useRequestHistory';
+import { AppShell, NavLink, Text, useMantineColorScheme } from '@mantine/core';
+import { useRequestHistory, HistoryItem } from './hooks/useRequestHistory';
 import { RequestPanel } from './components/RequestPanel';
 import { ResponsePanel } from './components/ResponsePanel';
 import { useEffect, useState } from 'react';
 import { ApiResponse } from './services/apiService';
 import { useDisclosure } from '@mantine/hooks';
+import { Header } from './components/Header';
+import { IconChevronRight } from '@tabler/icons-react';
 
 export default function Index() {
   const { history } = useRequestHistory();
@@ -40,13 +41,7 @@ export default function Index() {
       padding="md"
       withBorder={false}
     >
-      <AppShell.Header withBorder={true}>
-        <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <IconLeaf2 size={32} />
-          <Title size={24} className='-m-2'>Trevo</Title>
-        </Group>
-      </AppShell.Header>
+      <Header opened={opened} toggle={toggle} />
       <AppShell.Navbar p="md">
       <Text size="xl" className='mb-4'>
         History
