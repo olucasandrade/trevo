@@ -30,7 +30,7 @@ export const formatSize = (size: number): string => {
   }
 }
 
-function transformToHttps(url: string) {
+export default function transformToHttps(url: string) {
   if (!/^https?:\/\//i.test(url)) {
       url = `http://${url}`;
   }

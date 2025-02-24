@@ -1,7 +1,7 @@
 import { IconClock, IconCopy, IconDatabase } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { formatSize } from '../services/apiService';
-import { Button, Card } from "@mantine/core";
+import { Button, Card, Tabs, TabsList, TabsPanel, TabsTab } from "@mantine/core";
 import { toast } from "react-toastify";
 
 interface ResponsePanelProps {
@@ -83,27 +83,28 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
   }
 
   return (
-    <Card className="p-6 glass-panel h-[380px] slide-in max-w-full">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
+    <Card className="p-6 glass-panel h-80 slide-in">
+      <div className="flex items-center justify-between mb-4 max-w-full overflow-x-auto">
+        <div className="flex items-center gap-2 flex-nowrap">
           <span className="text-sm font-medium">Status:</span>
           <span className={`px-2 py-1 rounded-full text-xs ${
-            response.status >= 200 && response.status < 300
-              ? 'bg-green-500/10 text-green-500'
-              : 'bg-red-500/10 text-red-500'
+        response.status >= 200 && response.status < 300
+          ? 'bg-green-500/10 text-green-500'
+          : 'bg-red-500/10 text-red-500'
           }`}>
-            {response.status} {response.statusText}
+        {response.status} {response.statusText}
           </span>
 
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <IconClock className="h-3 w-3" />
-            <span>{response.elapsedTime.toFixed(0)}ms</span>
+        <IconClock className="h-3 w-3" />
+        <span>{response.elapsedTime.toFixed(0)}ms</span>
           </div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <IconDatabase className="h-3 w-3" />
-            <span>{formatSize(response.size)}</span>
+        <IconDatabase className="h-3 w-3" />
+        <span>{formatSize(response.size)}</span>
           </div>
         </div>
+        
         <Button
           size="icon"
           variant="ghost"
@@ -113,17 +114,33 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
         </Button>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 max-w-full">
         {isHtml ? (
-          <div className="relative">
-            <iframe
-              className="w-full h-[300px] rounded-md bg-secondary/50"
-              srcDoc={response.body as string}
-            />  
+          <div className="relative max-w-full">
+              <Tabs defaultValue="params" className="w-full">
+              <TabsList className="grid grid-cols-2 mb-4">
+                <TabsTab value="formatted">HTML Page</TabsTab>
+                <TabsTab value="as_code">HTML Code</TabsTab>
+              </TabsList>
+              <TabsPanel value="formatted" className="space-y-4 max-w-full overflow-hidden">
+                  <iframe
+                  className="w-full h-[210px] rounded-md bg-secondary/50"
+                  srcDoc={formattedBody
+                    .replace(/<script/g, '<!-- script')
+                    .replace(/<\/script>/g, '</script -->')}
+                />
+              </TabsPanel>
+      
+              <TabsPanel value="as_code" className="space-y-4 max-w-full">
+                <pre className="w-full h-[210px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
+                  {formattedBody}
+                </pre>
+              </TabsPanel>
+              </Tabs>
           </div>
         ) : (
-          <div className="relative">
-            <pre className="w-full h-[300px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap">
+          <div className="relative max-w-full">
+            <pre className="w-full h-[300px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
               {formattedBody}
             </pre>
           </div>

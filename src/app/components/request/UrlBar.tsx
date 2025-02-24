@@ -1,4 +1,5 @@
 import { Button, Input, Select } from "@mantine/core";
+import { IconSend } from "@tabler/icons-react";
 
 interface UrlBarProps {
   url: string;
@@ -29,7 +30,10 @@ export const UrlBar = ({ url, method, onUrlChange, onMethodChange, onSubmit, isD
       />
       <Button onClick={onSubmit} className="neo-button" disabled={isDisabled || isLoading}>
       {isLoading ?  <div
-      className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"/> : "Send"}
+      className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"/> : <div className="flex items-center gap-2">
+        <IconSend className="h-4 w-4" />
+        Send
+        </div>}
       </Button>
     </div>
   );

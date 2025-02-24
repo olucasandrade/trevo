@@ -7,8 +7,10 @@ import { ParamsSection } from './request/ParamsSection';
 import { HeadersSection } from './request/HeadersSection';
 import { BodySection } from './request/BodySection';
 import type { HistoryItem } from '../hooks/useRequestHistory';
-import { Card, Tabs, TabsList, TabsPanel, TabsTab } from '@mantine/core';
+import { Card, Tabs, TabsList, TabsPanel, TabsTab, Button } from '@mantine/core';
 import { toast } from 'react-toastify';
+import { generateCurlCommand } from '../utils/curlGenerator';
+import { IconTerminal2 } from '@tabler/icons-react';
 
 interface HeaderPair {
   key: string;
@@ -133,6 +135,39 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
     toast("Copied to clipboard", { type: "info" });
   };
 
+  const copyAsCurl = () => {
+    const headersObj = headers.reduce((acc, { key, value }) => {
+      if (key && value) acc[key] = value;
+      return acc;
+    }, {} as Record<string, string>);
+
+    const paramsObj = params.reduce((acc, { key, value }) => {
+      if (key && value) acc[key] = value;
+      return acc;
+    }, {} as Record<string, string>);
+
+    const curl = generateCurlCommand({
+      method,
+      url,
+      headers: headersObj,
+      params: paramsObj,
+      body,
+      bodyType,
+    });
+
+    navigator.clipboard.writeText(curl);
+    toast("cURL command copied to clipboard", { type: "success" });
+  };
+
+  const handleClear = () => {
+    setUrl('');
+    setMethod('GET');
+    setHeaders([{ key: '', value: '' }]);
+    setParams([{ key: '', value: '' }]);
+    setBodyType('none');
+    setBody('');
+  };
+
   return (
     <Card className="p-6 glass-panel slide-in">
       <UrlBar
@@ -180,6 +215,27 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
           />
         </TabsPanel>
       </Tabs>
+
+      <div className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-200">
+        <Button
+          variant="light"
+          onClick={handleClear}
+        >
+          <div className='flex items-center gap-1'>
+            Clear
+          </div>
+        </Button>
+        <Button
+          variant="light"
+          onClick={copyAsCurl}
+          disabled={!validateCurrentRequest().valid}
+        >
+          <div className='flex items-center gap-1'>
+            <IconTerminal2 className="h-4 w-4" />
+            Copy request as cURL
+          </div>
+        </Button>
+      </div>
     </Card>
   );
 };
