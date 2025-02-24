@@ -76,7 +76,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
 
   if (!response) {
     return (
-      <Card className="p-6 glass-panel h-[380px] flex items-center justify-center text-muted-foreground slide-in">
+      <Card className="p-6 glass-panel h-[300px] flex items-center justify-center text-muted-foreground slide-in">
         Send a request to see the response
       </Card>
     );
