@@ -1,10 +1,8 @@
-"use client"
 import { AppShell, Burger, Group, Button, Title, Stack, Drawer } from '@mantine/core';
-import { IconClover, IconBrandGithub, IconHistory, IconSun, IconMoon } from '@tabler/icons-react';
+import { IconClover, IconBrandGithub, IconHistory } from '@tabler/icons-react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useDisclosure } from '@mantine/hooks';
-import { useMantineColorScheme } from '@mantine/core';
 import LocaleSwitcher from './LocaleSwitcher';
 
 interface HeaderProps {
@@ -15,7 +13,6 @@ interface HeaderProps {
 export function Header({ opened, toggle }: HeaderProps) {
   const t = useTranslations('navigation');
   const [drawerOpened, { open, close }] = useDisclosure(false);
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   const toggleAndClose = (forceOpen: boolean = false) => {
     if (opened || forceOpen) {
@@ -52,12 +49,6 @@ export function Header({ opened, toggle }: HeaderProps) {
             >
               {t('github')}
             </Button>
-            <Button
-              variant="subtle"
-              onClick={() => toggleColorScheme()}
-              leftSection={colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
-              fz={"md"}
-            />
             <LocaleSwitcher />
           </Group>
         </Group>
@@ -90,12 +81,6 @@ export function Header({ opened, toggle }: HeaderProps) {
             >
               Request history
           </Button>
-          <Button
-            variant="subtle"
-            onClick={() => toggleColorScheme()}
-            leftSection={colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
-            fullWidth
-          />
           <LocaleSwitcher />
         </Stack>
       </Drawer>

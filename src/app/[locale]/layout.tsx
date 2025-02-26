@@ -9,6 +9,7 @@ import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import MantineProvider from '../providers/MantineProvider';
 import QueryClientProvider from '../providers/QueryProvider';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 const satoshi = localFont({
   src: [
@@ -35,11 +36,11 @@ const satoshi = localFont({
   ],
 });
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode, params: { locale: string } }) {
   const messages = await getMessages();
 
   return (
-    <html lang="en"{...mantineHtmlProps}>
+    <html lang="en" {...mantineHtmlProps} suppressHydrationWarning>
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ToastContainer theme='dark' autoClose={3000} />
           <Analytics />
           {children}
+          <ThemeToggle />
         </MantineProvider>
       </NextIntlClientProvider>
       </QueryClientProvider>

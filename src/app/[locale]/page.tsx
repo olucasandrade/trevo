@@ -1,10 +1,10 @@
 "use client"
 
-import { AppShell, NavLink, Text, useMantineColorScheme } from '@mantine/core';
+import { AppShell, NavLink, Text } from '@mantine/core';
 import { useRequestHistory, HistoryItem } from '../hooks/useRequestHistory';
 import { RequestPanel } from '../components/RequestPanel';
 import { ResponsePanel } from '../components/ResponsePanel';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ApiResponse } from '../services/apiService';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from '../components/Header';
@@ -23,13 +23,6 @@ export default function Index() {
       setResponse(item.response);
     }
   };
-
-  const { setColorScheme } = useMantineColorScheme();
-
-  useEffect(() => {
-    setColorScheme('dark');
-  }, [setColorScheme]);
-
   return (
     <AppShell
       header={{ height: 60 }}
