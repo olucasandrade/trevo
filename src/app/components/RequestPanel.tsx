@@ -216,7 +216,7 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
         </TabsPanel>
       </Tabs>
 
-      <div className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-200">
+      <div className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-800">
         <Button
           variant="light"
           onClick={handleClear}

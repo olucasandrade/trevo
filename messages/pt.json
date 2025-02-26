@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "title": "Trevo - Ferramenta de Teste de API",
+    "description": "Ferramenta de teste de API de código aberto para desenvolvedores"
+  },
+  "navigation": {
+    "home": "Início",
+    "about": "Sobre",
+    "github": "GitHub"
+  },
+  "locale": {
+    "en": "Inglês",
+    "pt": "Português"
+  },
+  "about": {
+    "title": "Sobre mim e o Trevo",
+    "greeting": "Olá! 👋 Obrigado por dar uma olhada aqui no Trevo! Espero de verdade que esse projeto seja útil pra você!",
+    "introduction": "Meu nome é Lucas Andrade, e sou um desenvolvedor que curte desenvolver coisinhas de vez em sempre.",
+    "trevoDescription": "Trevo é uma ferramenta de teste de API código aberto projetada para tornar a interação com APIs perfeita. Seja depurando um endpoint, testando integrações ou automatizando requisições de API, o Trevo fornece um ambiente limpo e eficiente para otimizar o processo.",
+    "focus": "Com foco em velocidade, usabilidade e experiência do desenvolvedor, o Trevo elimina complexidades desnecessárias, permitindo que você passe mais tempo construindo e menos tempo resolvendo problemas de API.",
+    "features": {
+      "title": "Você também pode:",
+      "history": "Visualizar e usar histórico de requisições",
+      "curl": "Copiar suas requisições como cURL",
+      "clipboard": "Copiar respostas para a área de transferência",
+      "theme": "Alternar entre modo claro e escuro"
+    },
+    "upcoming": {
+      "title": "E em breve:",
+      "collections": "Salvar e gerenciar coleções de requisições",
+      "export": "Exportar e importar coleções",
+      "environment": "Personalizar seu ambiente de requisições",
+      "more": "E muito mais!"
+    }
+  }
+}

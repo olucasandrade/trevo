@@ -117,7 +117,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
       <div className="space-y-4 max-w-full">
         {isHtml ? (
           <div className="relative max-w-full">
-              <Tabs defaultValue="params" className="w-full">
+              <Tabs defaultValue="formatted" className="w-full">
               <TabsList className="grid grid-cols-2 mb-4">
                 <TabsTab value="formatted">HTML Page</TabsTab>
                 <TabsTab value="as_code">HTML Code</TabsTab>

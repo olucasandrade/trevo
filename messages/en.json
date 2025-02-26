@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "title": "Trevo - API Testing Tool",
+    "description": "Open source API testing tool for developers"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "github": "GitHub"
+  },
+  "locale": {
+    "en": "English",
+    "pt": "Portuguese"
+  },
+  "about": {
+    "title": "About me and Trevo",
+    "greeting": "Hi! 👋 Thanks for checking out Trevo! I'm excited to share this project with you and hope you find it useful in your development workflow.",
+    "introduction": "My name is Lucas Andrade, and I am a software engineer passionate about building tools that empower developers to work smarter and more efficiently. My focus is on creating intuitive and robust solutions that simplify complex workflows, making the development process smoother and more enjoyable.",
+    "trevoDescription": "Trevo is an open-source API testing tool designed to make interacting with APIs seamless. Whether you're debugging an endpoint, testing integrations, or automating API requests, Trevo provides a clean and efficient environment to streamline the process.",
+    "focus": "With a focus on speed, usability, and developer experience, Trevo eliminates unnecessary complexity, allowing you to spend more time building and less time troubleshooting API issues.",
+    "features": {
+      "title": "You can also:",
+      "history": "View and use request history",
+      "curl": "Copy your requests as cURL",
+      "clipboard": "Copy responses to the clipboard",
+      "theme": "Toggle between light and dark mode"
+    },
+    "upcoming": {
+      "title": "And coming soon:",
+      "collections": "Save and manage collections of requests",
+      "export": "Export and import collections",
+      "environment": "Customize your request environment",
+      "more": "And more!"
+    }
+  }
+}

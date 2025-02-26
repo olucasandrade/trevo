@@ -1,7 +1,9 @@
+"use client"
 import { AppShell, Burger, Group, Button, Title } from '@mantine/core';
-import { IconLeaf2, IconBrandGithub } from '@tabler/icons-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { IconClover, IconBrandGithub } from '@tabler/icons-react';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
+import LocaleSwitcher from './LocaleSwitcher';
 
 interface HeaderProps {
   opened?: boolean;
@@ -9,38 +11,42 @@ interface HeaderProps {
 }
 
 export function Header({ opened, toggle }: HeaderProps) {
-  const pathname = usePathname();
+  const t = useTranslations('navigation');
 
   return (
-    <AppShell.Header withBorder={true}>
+    <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937' }}>
       <Group h="100%" px="md" justify="space-between">
         <Group>
           {toggle && (
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           )}
-          <IconLeaf2 size={32} />
-          <Title size={24} className='-m-2'>Trevo</Title>
+          <Link href="/" className="flex items-center gap-1">
+            <IconClover size={32} />
+            <Title size={24}>Trevo</Title>
+          </Link>
         </Group>
         <Group>
-          <Link href="/" passHref>
-            <Button variant={pathname === '/' ? 'filled' : 'subtle'}>
-              Home
+          <Link href="/">
+            <Button variant='subtle' fz={"md"}>
+              {t('home')}
             </Button>
           </Link>
-          <Link href="/about" passHref>
-            <Button variant={pathname === '/about' ? 'filled' : 'subtle'}>
-              About
+          <Link href="/about">
+            <Button variant='subtle' fz={"md"}>
+              {t('about')}
             </Button>
           </Link>
           <Button
             component="a"
-            href="https://github.com/yourusername/trevo"
+            href="https://github.com/olucasandrade/trevo"
             target="_blank"
             variant="subtle"
             leftSection={<IconBrandGithub size={18} />}
+            fz={"md"}
           >
-            GitHub
+            {t('github')}
           </Button>
+          <LocaleSwitcher />
         </Group>
       </Group>
     </AppShell.Header>
