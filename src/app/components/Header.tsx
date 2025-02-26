@@ -1,8 +1,10 @@
 "use client"
-import { AppShell, Burger, Group, Button, Title } from '@mantine/core';
-import { IconClover, IconBrandGithub } from '@tabler/icons-react';
+import { AppShell, Burger, Group, Button, Title, Stack, Drawer } from '@mantine/core';
+import { IconClover, IconBrandGithub, IconHistory, IconSun, IconMoon } from '@tabler/icons-react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { useDisclosure } from '@mantine/hooks';
+import { useMantineColorScheme } from '@mantine/core';
 import LocaleSwitcher from './LocaleSwitcher';
 
 interface HeaderProps {
@@ -12,29 +14,62 @@ interface HeaderProps {
 
 export function Header({ opened, toggle }: HeaderProps) {
   const t = useTranslations('navigation');
+  const [drawerOpened, { open, close }] = useDisclosure(false);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  const toggleAndClose = (forceOpen: boolean = false) => {
+    if (opened || forceOpen) {
+      toggle?.();
+    }
+    close();
+  }
 
   return (
-    <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937' }}>
-      <Group h="100%" px="md" justify="space-between">
-        <Group>
-          {toggle && (
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          )}
-          <Link href="/" className="flex items-center gap-1">
-            <IconClover size={32} />
-            <Title size={24}>Trevo</Title>
-          </Link>
+    <>
+      <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937' }}>
+        <Group h="100%" px="md" justify="space-between">
+          <Group>
+            <Burger opened={drawerOpened} onClick={open} hiddenFrom="sm" size="sm" />
+            <Link href="/" className="flex items-center gap-1">
+              <IconClover size={32} />
+              <Title size={24}>Trevo</Title>
+            </Link>
+          </Group>
+          <Group visibleFrom="sm">
+            <Link href="/">
+              <Button variant='subtle' fz={"md"}>{t('home')}</Button>
+            </Link>
+            <Link href="/about">
+              <Button variant='subtle' fz={"md"}>{t('about')}</Button>
+            </Link>
+            <Button
+              component="a"
+              href="https://github.com/olucasandrade/trevo"
+              target="_blank"
+              variant="subtle"
+              leftSection={<IconBrandGithub size={18} />}
+              fz={"md"}
+            >
+              {t('github')}
+            </Button>
+            <Button
+              variant="subtle"
+              onClick={() => toggleColorScheme()}
+              leftSection={colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+              fz={"md"}
+            />
+            <LocaleSwitcher />
+          </Group>
         </Group>
-        <Group>
-          <Link href="/">
-            <Button variant='subtle' fz={"md"}>
-              {t('home')}
-            </Button>
+      </AppShell.Header>
+      
+      <Drawer opened={drawerOpened} onClose={close} size="xs" padding="md">
+        <Stack>
+          <Link href="/" onClick={() => toggleAndClose()}>
+            <Button variant='subtle' fullWidth>{t('home')}</Button>
           </Link>
-          <Link href="/about">
-            <Button variant='subtle' fz={"md"}>
-              {t('about')}
-            </Button>
+          <Link href="/about" onClick={() => toggleAndClose()}>
+            <Button variant='subtle' fullWidth>{t('about')}</Button>
           </Link>
           <Button
             component="a"
@@ -42,13 +77,28 @@ export function Header({ opened, toggle }: HeaderProps) {
             target="_blank"
             variant="subtle"
             leftSection={<IconBrandGithub size={18} />}
-            fz={"md"}
+            fullWidth
           >
             {t('github')}
           </Button>
+          <Button
+              component="a"
+              onClick={() => toggleAndClose(true)}
+              variant="subtle"
+              leftSection={<IconHistory size={18} />}
+              fz={"md"}
+            >
+              Request history
+          </Button>
+          <Button
+            variant="subtle"
+            onClick={() => toggleColorScheme()}
+            leftSection={colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+            fullWidth
+          />
           <LocaleSwitcher />
-        </Group>
-      </Group>
-    </AppShell.Header>
+        </Stack>
+      </Drawer>
+    </>
   );
 }
