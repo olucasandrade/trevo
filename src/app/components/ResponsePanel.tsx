@@ -76,7 +76,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
 
   if (!response) {
     return (
-      <Card className="p-6 glass-panel h-[300px] flex items-center justify-center text-muted-foreground slide-in">
+      <Card className="p-6 glass-panel h-[280px] flex items-center justify-center text-muted-foreground slide-in">
         Send a request to see the response
       </Card>
     );
@@ -124,7 +124,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
               </TabsList>
               <TabsPanel value="formatted" className="space-y-4 max-w-full overflow-hidden">
                   <iframe
-                  className="w-full h-[210px] rounded-md bg-secondary/50"
+                  className="w-full h-[160px] rounded-md bg-secondary/50"
                   srcDoc={formattedBody
                     .replace(/<script/g, '<!-- script')
                     .replace(/<\/script>/g, '</script -->')}
@@ -132,7 +132,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
               </TabsPanel>
       
               <TabsPanel value="as_code" className="space-y-4 max-w-full">
-                <pre className="w-full h-[210px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
+                <pre className="w-full h-[160px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
                   {formattedBody}
                 </pre>
               </TabsPanel>
@@ -140,7 +140,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
           </div>
         ) : (
           <div className="relative max-w-full">
-            <pre className="w-full h-[300px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
+            <pre className="w-full h-[200px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
               {formattedBody}
             </pre>
           </div>
