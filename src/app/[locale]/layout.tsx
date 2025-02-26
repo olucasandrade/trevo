@@ -36,11 +36,11 @@ const satoshi = localFont({
   ],
 });
 
-export default async function RootLayout({ children }: { children: React.ReactNode, params: { locale: string } }) {
+export default async function RootLayout({ children, params: { locale } }: { children: React.ReactNode, params: { locale: string } }) {
   const messages = await getMessages();
 
   return (
-    <html lang="en" {...mantineHtmlProps} suppressHydrationWarning>
+    <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning>
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
         <link rel="shortcut icon" href="/favicon.ico" />
