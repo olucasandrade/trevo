@@ -36,9 +36,9 @@ export function Header({ opened, toggle }: HeaderProps) {
             <Link href="/">
               <Button variant='subtle' fz={"md"}>{t('home')}</Button>
             </Link>
-            <Link href="/about">
+            <a href="https://trevo.rest" target='_blank'>
               <Button variant='subtle' fz={"md"}>{t('about')}</Button>
-            </Link>
+            </a>
             <Button
               component="a"
               href="https://github.com/olucasandrade/trevo"
