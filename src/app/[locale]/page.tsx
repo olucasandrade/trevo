@@ -9,6 +9,8 @@ import { ApiResponse } from '../services/apiService';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from '../components/Header';
 import { IconChevronRight } from '@tabler/icons-react';
+import InteractiveParticles from '../components/InteractiveParticles';
+import { motion } from 'framer-motion';
 
 export default function Index() {
   const { history } = useRequestHistory();
@@ -23,52 +25,89 @@ export default function Index() {
       setResponse(item.response);
     }
   };
-  return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{
-        width: { base: 200, md: 300, lg: 400 },
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened },
-      }}
-      padding="md"
-      withBorder={false}
-    >
-      <Header opened={opened} toggle={toggle} />
-      <AppShell.Navbar p="md">
-      <Text size="xl" className='mb-4'>
-        History
-      </Text>
-        
-        {history.length > 0 ? (
-           history.map((item: HistoryItem) => (
-            <NavLink
-            key={item.id}
-            label={item.url}
-            rightSection={
-              <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
-            }
-            variant="filled"
-            active
-            onClick={() => handleHistorySelect(item)}
-            className='rounded-md mb-2'
-          />
-          ))
+    return (
+      <AppShell
+        header={{ height: 60 }}
+        navbar={{
+          width: { base: 200, md: 300, lg: 400 },
+          breakpoint: 'sm',
+          collapsed: { mobile: !opened },
+        }}
+        padding="md"
+        withBorder={false}
+        className="transition-all duration-300 ease-in-out"
+      >
+        <Header opened={opened} toggle={toggle} />
+        <AppShell.Navbar p="md" className="transition-transform duration-300 ease-in-out">
+          <InteractiveParticles />
+          <Text size="xl" className="mb-4 transition-opacity duration-300">
+            History
+          </Text>
+          
+          {history.length > 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {history.map((item: HistoryItem, index: number) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <NavLink
+                    label={item.url}
+                    rightSection={
+                      <IconChevronRight size={12} stroke={1.5} className="mantine-rotate-rtl" />
+                    }
+                    variant="filled"
+                    active
+                    onClick={() => handleHistorySelect(item)}
+                    className="rounded-md mb-2 transform transition-all duration-200 hover:scale-102 hover:shadow-md"
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
           ) : (
-              <div>No requests yet</div>
-            )}
-      </AppShell.Navbar>
-      <AppShell.Main>
-      <div className="flex gap-8">
-          <div className="flex-1 space-y-8">
-            <RequestPanel
-              onResponse={setResponse} 
-              selectedRequest={selectedRequest}
-            />
-            <ResponsePanel response={response} />
-          </div>
-        </div>
-      </AppShell.Main>
-    </AppShell>
-  );
-}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-gray-500"
+            >
+              No requests yet
+            </motion.div>
+          )}
+        </AppShell.Navbar>
+        <AppShell.Main>
+          <motion.div 
+            className="flex gap-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex-1 space-y-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <RequestPanel
+                  onResponse={setResponse} 
+                  selectedRequest={selectedRequest}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <ResponsePanel response={response} />
+              </motion.div>
+            </div>
+          </motion.div>
+        </AppShell.Main>
+      </AppShell>
+    );
+  }
