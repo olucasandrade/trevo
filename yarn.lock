@@ -1670,6 +1670,15 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
+framer-motion@^12.4.10:
+  version "12.4.10"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.4.10.tgz#5b2aa0a18f5563edc9603c2c1cbc9d6f19a110a2"
+  integrity sha512-3Msuyjcr1Pb5hjkn4EJcRe1HumaveP0Gbv4DBMKTPKcV/1GSMkQXj+Uqgneys+9DPcZM18Hac9qY9iUEF5LZtg==
+  dependencies:
+    motion-dom "^12.4.10"
+    motion-utils "^12.4.10"
+    tslib "^2.4.0"
+
 fsevents@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
@@ -2300,6 +2309,18 @@ minimist@^1.2.0, minimist@^1.2.6:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-7.1.2.tgz#93a9626ce5e5e66bd4db86849e7515e92340a707"
   integrity sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==
+
+motion-dom@^12.4.10:
+  version "12.4.10"
+  resolved "https://registry.yarnpkg.com/motion-dom/-/motion-dom-12.4.10.tgz#025886748e33e8ee77742eea7bd088b202e7c83a"
+  integrity sha512-ISP5u6FTceoD6qKdLupIPU/LyXBrxGox+P2e3mBbm1+pLdlBbwv01YENJr7+1WZnW5ucVKzFScYsV1eXTCG4Xg==
+  dependencies:
+    motion-utils "^12.4.10"
+
+motion-utils@^12.4.10:
+  version "12.4.10"
+  resolved "https://registry.yarnpkg.com/motion-utils/-/motion-utils-12.4.10.tgz#3d93acea5454419eaaad8d5e5425cb71cbfa1e7f"
+  integrity sha512-NPwZd94V013SwRf++jMrk2+HEBgPkeIE2RiOzhAuuQlqxMJPkKt/LXVh6Upl+iN8oarSGD2dlY5/bqgsYXDABA==
 
 mrmime@^2.0.0:
   version "2.0.1"
