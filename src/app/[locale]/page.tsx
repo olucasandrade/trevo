@@ -1,10 +1,10 @@
 "use client"
 
-import { AppShell, NavLink, Text } from '@mantine/core';
+import { AppShell, NavLink, Text, useMantineColorScheme } from '@mantine/core';
 import { useRequestHistory, HistoryItem } from '../hooks/useRequestHistory';
 import { RequestPanel } from '../components/RequestPanel';
 import { ResponsePanel } from '../components/ResponsePanel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApiResponse } from '../services/apiService';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from '../components/Header';
@@ -17,6 +17,11 @@ export default function Index() {
   const [response, setResponse] = useState<ApiResponse>();
   const [selectedRequest, setSelectedRequest] = useState<HistoryItem | null>(null);
   const [opened, { toggle }] = useDisclosure();
+  const { setColorScheme } = useMantineColorScheme();
+
+  useEffect(() => {
+    setColorScheme('dark');
+  })
 
   const handleHistorySelect = (item: HistoryItem) => {
     toggle();
