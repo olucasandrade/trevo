@@ -21,7 +21,7 @@ export default function Index() {
 
   useEffect(() => {
     setColorScheme('dark');
-  })
+  }, [])
 
   const handleHistorySelect = (item: HistoryItem) => {
     toggle();
