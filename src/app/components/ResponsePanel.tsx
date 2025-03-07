@@ -153,7 +153,7 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
                 tab: {
                   transition: 'all 0.2s ease',
                   fontWeight: 500,
-                  '&[data-active]': {
+                  '&[dataActive]': {
                     fontWeight: 600,
                   }
                 }

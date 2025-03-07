@@ -1,18 +1,22 @@
 import { AppShell, Burger, Group, Button, Title, Stack, Drawer } from '@mantine/core';
-import { IconClover, IconBrandGithub, IconHistory } from '@tabler/icons-react';
+import { IconClover, IconBrandGithub, IconHistory, IconBookmarks } from '@tabler/icons-react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useDisclosure } from '@mantine/hooks';
 import LocaleSwitcher from './LocaleSwitcher';
+import { SavedRequestsDrawer } from './request/SavedRequestsDrawer';
+import { SavedRequest } from '../types/requests';
 
 interface HeaderProps {
   opened?: boolean;
+  onSelectRequest: (request: SavedRequest) => void;
   toggle?: () => void;
 }
 
-export function Header({ opened, toggle }: HeaderProps) {
+export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
   const t = useTranslations('navigation');
   const [drawerOpened, { open, close }] = useDisclosure(false);
+  const [savedRequestsOpened, { open: openSavedRequests, close: closeSavedRequests }] = useDisclosure(false);
 
   const toggleAndClose = (forceOpen: boolean = false) => {
     if (opened || forceOpen) {
@@ -39,6 +43,19 @@ export function Header({ opened, toggle }: HeaderProps) {
             </Link>
           </Group>
           <Group visibleFrom="sm" gap="md">
+            <Button
+              variant='subtle'
+              leftSection={<IconBookmarks size={18} />}
+              onClick={openSavedRequests}
+              style={{ 
+                padding: '8px 16px',
+                transition: 'all 0.2s ease',
+                fontWeight: 500
+              }}
+              className="hover:scale-105"
+            >
+              Saved Requests
+            </Button>
             <Link href="/">
               <Button 
                 variant='subtle' 
@@ -160,6 +177,15 @@ export function Header({ opened, toggle }: HeaderProps) {
           <LocaleSwitcher />
         </Stack>
       </Drawer>
+
+      <SavedRequestsDrawer
+        opened={savedRequestsOpened}
+        onClose={closeSavedRequests}
+        onSelectRequest={(request: SavedRequest) => {
+          onSelectRequest(request);
+          closeSavedRequests();
+        }}
+      />
     </>
   );
 }

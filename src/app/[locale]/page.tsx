@@ -11,25 +11,49 @@ import { Header } from '../components/Header';
 import { IconChevronRight } from '@tabler/icons-react';
 import InteractiveParticles from '../components/InteractiveParticles';
 import { motion } from 'framer-motion';
+import { SavedRequest } from '../types/requests';
 
 export default function Index() {
   const { history } = useRequestHistory();
   const [response, setResponse] = useState<ApiResponse>();
   const [selectedRequest, setSelectedRequest] = useState<HistoryItem | null>(null);
   const [opened, { toggle }] = useDisclosure();
+  const [activeTab, setActiveTab] = useState('http');
   const { setColorScheme } = useMantineColorScheme();
 
   useEffect(() => {
     setColorScheme('dark');
   }, [])
 
-  const handleHistorySelect = (item: HistoryItem) => {
+  const convertToHistoryItem = (request: SavedRequest): HistoryItem => {
+    return {
+      id: request.id,
+      url: request.url,
+      method: request.method,
+      config: {
+        headers: request.headers,
+        params: request.params,
+        body: request.body,
+      },
+      timestamp: new Date().toISOString(),
+    };
+  };
+
+  const handleHistoryItemSelect = (item: HistoryItem) => {
     toggle();
     setSelectedRequest(item);
     if (item.response) {
       setResponse(item.response);
     }
   };
+
+  const handleSavedRequestSelect = (request: SavedRequest) => {
+    const historyItem = convertToHistoryItem(request);
+    handleHistoryItemSelect(historyItem);
+    setActiveTab('http');
+    setResponse(undefined);
+  }
+
     return (
       <AppShell
         header={{ height: 60 }}
@@ -42,7 +66,7 @@ export default function Index() {
         withBorder={false}
         className="transition-all duration-300 ease-in-out"
       >
-        <Header opened={opened} toggle={toggle} />
+        <Header opened={opened} toggle={toggle} onSelectRequest={handleSavedRequestSelect} />
         <AppShell.Navbar p="md" className="transition-transform duration-300 ease-in-out">
           <InteractiveParticles />
           <Text size="xl" className="mb-4 transition-opacity duration-300">
@@ -69,7 +93,7 @@ export default function Index() {
                     }
                     variant="filled"
                     active
-                    onClick={() => handleHistorySelect(item)}
+                    onClick={() => handleHistoryItemSelect(item)}
                     className="rounded-md mb-2 transform transition-all duration-200 hover:scale-102 hover:shadow-md"
                   />
                 </motion.div>
@@ -101,15 +125,21 @@ export default function Index() {
                 <RequestPanel
                   onResponse={setResponse} 
                   selectedRequest={selectedRequest}
+                  activeTab={activeTab}
+                  onActiveTabChange={setActiveTab}
                 />
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <ResponsePanel response={response} />
-              </motion.div>
+              {
+                activeTab === 'http' && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <ResponsePanel response={response} />
+                  </motion.div>
+                )
+              }
             </div>
           </motion.div>
         </AppShell.Main>

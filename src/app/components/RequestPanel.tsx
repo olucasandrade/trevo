@@ -6,11 +6,13 @@ import { UrlBar } from './request/UrlBar';
 import { ParamsSection } from './request/ParamsSection';
 import { HeadersSection } from './request/HeadersSection';
 import { BodySection } from './request/BodySection';
+import { WebSocketPanel } from './request/WebSocketPanel';
+import { SavedRequestDialog } from './request/SavedRequestDialog';
 import type { HistoryItem } from '../hooks/useRequestHistory';
-import { Card, Tabs, TabsList, TabsPanel, TabsTab, Button } from '@mantine/core';
+import { Card, Tabs, TabsList, TabsPanel, TabsTab, Button, Group } from '@mantine/core';
 import { toast } from 'react-toastify';
 import { generateCurlCommand } from '../utils/curlGenerator';
-import { IconTerminal2 } from '@tabler/icons-react';
+import { IconTerminal2, IconBookmarkPlus } from '@tabler/icons-react';
 
 interface HeaderPair {
   key: string;
@@ -25,9 +27,12 @@ interface ParamPair {
 interface RequestPanelProps {
   onResponse: (response: ApiResponse) => void;
   selectedRequest: HistoryItem | null;
+  activeTab: string;
+  onActiveTabChange: (tab: string) => void;
 }
 
-export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps) => {
+export const RequestPanel = ({ onResponse, selectedRequest, activeTab, onActiveTabChange }: RequestPanelProps) => {
+  const [saveDialogOpened, setSaveDialogOpened] = useState(false);
   const [url, setUrl] = useState('');
   const [method, setMethod] = useState('GET');
   const [headers, setHeaders] = useState<HeaderPair[]>([{ key: '', value: '' }]);
@@ -178,109 +183,162 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
         border: '1px solid rgba(255, 255, 255, 0.1)'
       }}
     >
-      <UrlBar
-        url={url}
-        method={method}
-        onUrlChange={setUrl}
-        onMethodChange={setMethod}
-        onSubmit={handleSubmit}
-        isDisabled={!validateCurrentRequest().valid}
-        isLoading={isLoading}
+      {
+        activeTab === 'http' && (
+          <UrlBar
+            url={url}
+            method={method}
+            onUrlChange={setUrl}
+            onMethodChange={setMethod}
+            onSubmit={handleSubmit}
+            isDisabled={!validateCurrentRequest().valid}
+            isLoading={isLoading}
+          />
+        )
+      }
+
+      <Group mb="md" justify="space-between">
+        <Tabs 
+          value={activeTab}
+          onChange={(value) => onActiveTabChange(value || 'http')}
+          className="flex-1"
+          styles={{
+            tab: {
+              transition: 'all 0.2s ease',
+              fontWeight: 500,
+              '&[dataActive]': {
+                fontWeight: 600,
+              }
+            }
+          }}
+        >
+          <TabsList>
+            <TabsTab value="http">HTTP</TabsTab>
+            <TabsTab value="websocket">WebSocket</TabsTab>
+          </TabsList>
+        </Tabs>
+
+        {activeTab === 'http' && (
+          <Button
+            variant="subtle"
+            leftSection={<IconBookmarkPlus size={18} />}
+            onClick={() => setSaveDialogOpened(true)}
+            className="hover:scale-105"
+            style={{ transition: 'transform 0.2s ease' }}
+            disabled={!validateCurrentRequest().valid}
+          >
+            Save Request
+          </Button>
+        )}
+      </Group>
+
+      {activeTab === 'http' ? (
+        <>
+          <Tabs defaultValue="params">
+            <TabsList 
+              className="grid grid-cols-3 mb-4"
+              style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+              }}
+            >
+              <TabsTab value="params">Params</TabsTab>
+              <TabsTab value="headers">Headers</TabsTab>
+              <TabsTab value="body">Body</TabsTab>
+            </TabsList>
+
+            <TabsPanel value="params" className="space-y-4">
+              <ParamsSection
+                params={params}
+                onAddParam={addParam}
+                onRemoveParam={removeParam}
+                onUpdateParam={updateParam}
+              />
+            </TabsPanel>
+
+            <TabsPanel value="headers" className="space-y-4">
+              <HeadersSection
+                headers={headers}
+                onAddHeader={addHeader}
+                onRemoveHeader={removeHeader}
+                onUpdateHeader={updateHeader}
+              />
+            </TabsPanel>
+
+            <TabsPanel value="body" className="space-y-4">
+              <BodySection
+                body={body}
+                bodyType={bodyType}
+                onBodyChange={setBody}
+                onBodyTypeChange={setBodyType}
+                onCopyToClipboard={copyToClipboard}
+              />
+            </TabsPanel>
+          </Tabs>
+
+          <div 
+            className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-800"
+            style={{
+              borderColor: 'rgba(255, 255, 255, 0.1)',
+            }}
+          >
+            <Button
+              variant="light"
+              onClick={handleClear}
+              className="transition-all duration-300 hover:scale-105 active:scale-95"
+              styles={{
+                root: {
+                  fontWeight: 500,
+                  transition: 'all 0.3s ease',
+                }
+              }}
+            >
+              <div className='flex items-center gap-1'>
+                Clear
+              </div>
+            </Button>
+            <Button
+              variant="light"
+              onClick={copyAsCurl}
+              disabled={!validateCurrentRequest().valid}
+              className="transition-all duration-300 hover:scale-105 active:scale-95"
+              styles={{
+                root: {
+                  fontWeight: 500,
+                  transition: 'all 0.3s ease',
+                }
+              }}
+            >
+              <div className='flex items-center gap-1'>
+                <IconTerminal2 className="h-4 w-4" />
+                Copy request as cURL
+              </div>
+            </Button>
+          </div>
+        </>
+      ) : (
+        <WebSocketPanel />
+      )}
+
+      <SavedRequestDialog
+        opened={saveDialogOpened}
+        onClose={() => setSaveDialogOpened(false)}
+        requestData={{
+          url,
+          method,
+          headers: headers.reduce((acc, { key, value }) => {
+            if (key && value) acc[key] = value;
+            return acc;
+          }, {} as Record<string, string>),
+          params: params.reduce((acc, { key, value }) => {
+            if (key && value) acc[key] = value;
+            return acc;
+          }, {} as Record<string, string>),
+          body,
+          bodyType
+        }}
       />
 
-      <Tabs 
-        defaultValue="params" 
-        className="w-full"
-        styles={{
-          tab: {
-            transition: 'all 0.2s ease',
-            fontWeight: 500,
-            '&[data-active]': {
-              fontWeight: 600,
-            }
-          }
-        }}
-      >
-        <TabsList 
-          className="grid grid-cols-3 mb-4"
-          style={{
-            borderRadius: '8px',
-            overflow: 'hidden',
-          }}
-        >
-          <TabsTab value="params">Params</TabsTab>
-          <TabsTab value="headers">Headers</TabsTab>
-          <TabsTab value="body">Body</TabsTab>
-        </TabsList>
-
-        <TabsPanel value="params" className="space-y-4">
-          <ParamsSection
-            params={params}
-            onAddParam={addParam}
-            onRemoveParam={removeParam}
-            onUpdateParam={updateParam}
-          />
-        </TabsPanel>
-
-        <TabsPanel value="headers" className="space-y-4">
-          <HeadersSection
-            headers={headers}
-            onAddHeader={addHeader}
-            onRemoveHeader={removeHeader}
-            onUpdateHeader={updateHeader}
-          />
-        </TabsPanel>
-
-        <TabsPanel value="body" className="space-y-4">
-          <BodySection
-            body={body}
-            bodyType={bodyType}
-            onBodyChange={setBody}
-            onBodyTypeChange={setBodyType}
-            onCopyToClipboard={copyToClipboard}
-          />
-        </TabsPanel>
-      </Tabs>
-
-      <div 
-        className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-800"
-        style={{
-          borderColor: 'rgba(255, 255, 255, 0.1)',
-        }}
-      >
-        <Button
-          variant="light"
-          onClick={handleClear}
-          className="transition-all duration-300 hover:scale-105 active:scale-95"
-          styles={{
-            root: {
-              fontWeight: 500,
-              transition: 'all 0.3s ease',
-            }
-          }}
-        >
-          <div className='flex items-center gap-1'>
-            Clear
-          </div>
-        </Button>
-        <Button
-          variant="light"
-          onClick={copyAsCurl}
-          disabled={!validateCurrentRequest().valid}
-          className="transition-all duration-300 hover:scale-105 active:scale-95"
-          styles={{
-            root: {
-              fontWeight: 500,
-              transition: 'all 0.3s ease',
-            }
-          }}
-        >
-          <div className='flex items-center gap-1'>
-            <IconTerminal2 className="h-4 w-4" />
-            Copy request as cURL
-          </div>
-        </Button>
-      </div>
     </Card>
   );
 };
