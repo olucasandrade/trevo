@@ -32,5 +32,23 @@
       "environment": "Customize your request environment",
       "more": "And more!"
     }
+  },
+  "savedRequests": {
+    "title": "Saved Requests",
+    "newFolder": "New Folder",
+    "createFolder": "Create",
+    "folderName": "Folder name",
+    "saveRequest": "Save Request",
+    "requestName": "Request name",
+    "selectFolder": "Select folder",
+    "createNewFolder": "Create new folder",
+    "noFolders": "No folders yet",
+    "noRequests": "No requests in this folder",
+    "renameFolder": "Rename",
+    "deleteFolder": "Delete",
+    "errors": {
+      "nameRequired": "Request name is required",
+      "folderNameRequired": "Folder name is required"
+    }
   }
 }

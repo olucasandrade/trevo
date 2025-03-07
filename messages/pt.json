@@ -32,5 +32,23 @@
       "environment": "Personalizar seu ambiente de requisições",
       "more": "E muito mais!"
     }
+  },
+  "savedRequests": {
+    "title": "Requisições Salvas",
+    "newFolder": "Nova Pasta",
+    "createFolder": "Criar",
+    "folderName": "Nome da pasta",
+    "saveRequest": "Salvar Requisição",
+    "requestName": "Nome da requisição",
+    "selectFolder": "Selecionar pasta",
+    "createNewFolder": "Criar nova pasta",
+    "noFolders": "Nenhuma pasta ainda",
+    "noRequests": "Nenhuma requisição nesta pasta",
+    "renameFolder": "Renomear",
+    "deleteFolder": "Excluir",
+    "errors": {
+      "nameRequired": "Nome da requisição é obrigatório",
+      "folderNameRequired": "Nome da pasta é obrigatório"
+    }
   }
 }

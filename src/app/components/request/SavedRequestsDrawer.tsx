@@ -11,6 +11,7 @@ import {
   Collapse,
   UnstyledButton
 } from '@mantine/core';
+import { useTranslations } from 'next-intl';
 import { 
   IconFolder, 
   IconDotsVertical, 
@@ -37,6 +38,7 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
     deleteRequest,
     subscribe,
   } = useSavedRequests();
+  const t = useTranslations('savedRequests');
   const [folders, setFolders] = useState(foldersFromHook);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
     <Drawer
       opened={opened}
       onClose={onClose}
-      title="Saved Requests"
+      title={t('title')}
       position="right"
       size="md"
       className="overflow-hidden"
@@ -87,7 +89,7 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
       <Stack gap="md">
         <Group>
           <TextInput
-            placeholder="New folder name"
+            placeholder={t('folderName')}
             value={newFolderName}
             onChange={(e) => setNewFolderName(e.target.value)}
             style={{ flex: 1 }}
@@ -97,7 +99,7 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
             disabled={!newFolderName.trim()}
             leftSection={<IconPlus size={16} />}
           >
-            Create
+            {t('createFolder')}
           </Button>
         </Group>
         <Stack gap="xs" className="overflow-y-auto">
@@ -147,14 +149,14 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
                         leftSection={<IconEdit size={16} />}
                         onClick={() => setEditingFolder(folder.id)}
                       >
-                        Rename
+                        {t('renameFolder')}
                       </Menu.Item>
                       <Menu.Item
                         leftSection={<IconTrash size={16} />}
                         onClick={() => deleteFolder(folder.id)}
                         color="red"
                       >
-                        Delete
+                        {t('deleteFolder')}
                       </Menu.Item>
                     </Menu.Dropdown>
                   </Menu>
@@ -163,7 +165,9 @@ export function SavedRequestsDrawer({ opened, onClose, onSelectRequest }: SavedR
 
               <Collapse in={expandedFolders.includes(folder.id)}>
                 <Stack gap="xs" ml="md" mb="sm">
-                  {folder.requests.map(request => (
+                  {folder.requests.length === 0 ? (
+                    <Text size="sm" c="dimmed">{t('noRequests')}</Text>
+                  ) : folder.requests.map(request => (
                     <Group key={request.id} wrap="nowrap">
                       <UnstyledButton
                         onClick={() => onSelectRequest(request)}

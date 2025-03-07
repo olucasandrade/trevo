@@ -9,6 +9,7 @@ import {
   Text
 } from '@mantine/core';
 import { useSavedRequests } from '../../hooks/useSavedRequests';
+import { useTranslations } from 'next-intl';
 
 interface SavedRequestDialogProps {
   opened: boolean;
@@ -30,6 +31,7 @@ export function SavedRequestDialog({ opened, onClose, requestData, initialFolder
   const [newFolderName, setNewFolderName] = useState('');
   const [requestName, setRequestName] = useState('');
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
+  const t = useTranslations('savedRequests');
 
   const handleSave = () => {
     try {
@@ -60,29 +62,31 @@ export function SavedRequestDialog({ opened, onClose, requestData, initialFolder
     <Modal
       opened={opened}
       onClose={onClose}
-      title="Save Request"
+      title={t('saveRequest')}
       size="md"
     >
       <Stack gap="md">
         <TextInput
-          label="Request Name"
-          placeholder="Enter a name for this request"
+          label={t('requestName')}
+          placeholder={t('requestName')}
           value={requestName}
           onChange={(e) => setRequestName(e.target.value)}
+          error={!requestName.trim() && t('errors.nameRequired')}
         />
 
         {isCreatingFolder ? (
           <TextInput
-            label="New Folder Name"
-            placeholder="Enter folder name"
+            label={t('folderName')}
+            placeholder={t('folderName')}
             value={newFolderName}
             onChange={(e) => setNewFolderName(e.target.value)}
+            error={!newFolderName.trim() && t('errors.folderNameRequired')}
             required
           />
         ) : (
           <Select
-            label="Select Folder"
-            placeholder="Choose a folder"
+            label={t('selectFolder')}
+            placeholder={t('selectFolder')}
             data={folders.map(f => ({ value: f.id, label: f.name }))}
             value={selectedFolder}
             onChange={(value) => setSelectedFolder(value || '')}
@@ -96,14 +100,14 @@ export function SavedRequestDialog({ opened, onClose, requestData, initialFolder
             variant="subtle"
             onClick={() => setIsCreatingFolder(!isCreatingFolder)}
           >
-            {isCreatingFolder ? 'Select Existing Folder' : 'Create New Folder'}
+            {isCreatingFolder ? t('selectFolder') : t('createNewFolder')}
           </Button>
 
           <Button
             onClick={handleSave}
             disabled={!selectedFolder && !newFolderName.trim()}
           >
-            Save Request
+            {t('saveRequest')}
           </Button>
         </Group>
 
