@@ -40,7 +40,7 @@ export default async function RootLayout({ children, params: { locale } }: { chi
   const messages = await getMessages();
 
   return (
-    <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning>
+    <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning data-mantine-color-scheme="dark">
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
         <link rel="shortcut icon" href="/favicon.ico" />
