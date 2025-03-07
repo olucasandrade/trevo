@@ -36,7 +36,13 @@ const satoshi = localFont({
   ],
 });
 
-export default async function RootLayout({ children, params: { locale } }: { children: React.ReactNode, params: { locale: string } }) {
+import { setRequestLocale } from 'next-intl/server';
+
+export default async function RootLayout(
+  { children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }
+) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
