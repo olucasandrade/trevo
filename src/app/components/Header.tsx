@@ -128,7 +128,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               {t('home')}
             </Button>
           </Link>
-          <Link href="/about" onClick={() => toggleAndClose()}>
+          <a href="https://trevo.rest" onClick={() => toggleAndClose()}>
             <Button 
               variant='subtle' 
               fullWidth
@@ -141,7 +141,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
             >
               {t('about')}
             </Button>
-          </Link>
+          </a>
           <Button
             component="a"
             href="https://github.com/olucasandrade/trevo"

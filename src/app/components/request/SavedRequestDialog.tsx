@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 import { useSavedRequests } from '../../hooks/useSavedRequests';
 import { useTranslations } from 'next-intl';
+import { toast } from 'react-toastify';
 
 interface SavedRequestDialogProps {
   opened: boolean;
@@ -53,6 +54,7 @@ export function SavedRequestDialog({ opened, onClose, requestData, initialFolder
       setSelectedFolder('');
       setNewFolderName('');
       setIsCreatingFolder(false);
+      toast.success(t('savedSuccessfully'));
     } catch (error) {
       console.error('Error saving request:', error);
     }

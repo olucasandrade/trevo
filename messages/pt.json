@@ -50,5 +50,6 @@
       "nameRequired": "Nome da requisição é obrigatório",
       "folderNameRequired": "Nome da pasta é obrigatório"
     }
-  }
+  },
+  "savedSucessfully": "Requisição salva com sucesso!"
 }

@@ -50,5 +50,6 @@
       "nameRequired": "Request name is required",
       "folderNameRequired": "Folder name is required"
     }
-  }
+  },
+  "savedSuccessfully": "Saved successfully"
 }
