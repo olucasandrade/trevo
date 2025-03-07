@@ -35,19 +35,19 @@ export default function LocaleSwitcherSelect({
   return (
     <label
       className={clsx(
-        'relative text-gray-400',
+        'relative text-gray-400 rounded-md px-2 py-1 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800',
         isPending && 'transition-opacity [&:disabled]:opacity-30'
       )}
     >
       <select
-        className="inline-flex appearance-none bg-transparent py-3 pl-2 pr-2"
+        className="inline-flex appearance-none bg-transparent py-2 pl-2 pr-6 outline-none transition-all duration-300 cursor-pointer"
         defaultValue={defaultValue}
         disabled={isPending}
         onChange={onSelectChange}
       >
         {children}
       </select>
-      <span className="pointer-events-none absolute right-2 top-[8px]">⌄</span>
+      <span className="pointer-events-none absolute right-3 top-[12px] transition-transform duration-300 transform group-hover:translate-y-1">⌄</span>
     </label>
   );
 }

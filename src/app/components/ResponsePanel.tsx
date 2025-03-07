@@ -76,32 +76,59 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
 
   if (!response) {
     return (
-      <Card className="p-6 glass-panel h-[280px] flex items-center justify-center text-muted-foreground slide-in">
-        Send a request to see the response
+      <Card 
+        className="p-6 glass-panel h-[280px] flex items-center justify-center text-muted-foreground slide-in"
+        style={{ 
+          backdropFilter: 'blur(8px)',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}
+      >
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-400 animate-pulse flex items-center justify-center">
+            <IconDatabase className="h-8 w-8 text-gray-400" />
+          </div>
+          <p className="text-center text-lg font-medium">Send a request to see the response</p>
+        </div>
       </Card>
     );
   }
 
   return (
-    <Card className="p-6 glass-panel h-80 slide-in">
+    <Card 
+      className="p-6 glass-panel h-80 slide-in"
+      style={{ 
+        backdropFilter: 'blur(8px)',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+      }}
+    >
       <div className="flex items-center justify-between mb-4 max-w-full overflow-x-auto">
         <div className="flex items-center gap-2 flex-nowrap">
           <span className="text-sm font-medium">Status:</span>
           <span className={`px-2 py-1 rounded-full text-xs ${
-        response.status >= 200 && response.status < 300
-          ? 'bg-green-500/10 text-green-500'
-          : 'bg-red-500/10 text-red-500'
-          }`}>
-        {response.status} {response.statusText}
+            response.status >= 200 && response.status < 300
+              ? 'bg-green-500/10 text-green-500'
+              : 'bg-red-500/10 text-red-500'
+          }`}
+          style={{ 
+            transition: 'all 0.3s ease',
+            fontWeight: 600,
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)'
+          }}
+          >
+            {response.status} {response.statusText}
           </span>
 
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-        <IconClock className="h-3 w-3" />
-        <span>{response.elapsedTime.toFixed(0)}ms</span>
+            <IconClock className="h-3 w-3" />
+            <span>{response.elapsedTime.toFixed(0)}ms</span>
           </div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-        <IconDatabase className="h-3 w-3" />
-        <span>{formatSize(response.size)}</span>
+            <IconDatabase className="h-3 w-3" />
+            <span>{formatSize(response.size)}</span>
           </div>
         </div>
         
@@ -109,6 +136,8 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
           size="icon"
           variant="ghost"
           onClick={() => copyToClipboard(formattedBody)}
+          className="transition-all duration-300 hover:scale-110 active:scale-95"
+          style={{ borderRadius: '50%' }}
         >
           <IconCopy className="h-4 w-4" />
         </Button>
@@ -117,14 +146,31 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
       <div className="space-y-4 max-w-full">
         {isHtml ? (
           <div className="relative max-w-full">
-              <Tabs defaultValue="formatted" className="w-full">
+            <Tabs 
+              defaultValue="formatted" 
+              className="w-full"
+              styles={{
+                tab: {
+                  transition: 'all 0.2s ease',
+                  fontWeight: 500,
+                  '&[data-active]': {
+                    fontWeight: 600,
+                  }
+                }
+              }}
+            >
               <TabsList className="grid grid-cols-2 mb-4">
                 <TabsTab value="formatted">HTML Page</TabsTab>
                 <TabsTab value="as_code">HTML Code</TabsTab>
               </TabsList>
               <TabsPanel value="formatted" className="space-y-4 max-w-full overflow-hidden">
-                  <iframe
+                <iframe
                   className="w-full h-[160px] rounded-md bg-secondary/50"
+                  style={{ 
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                  }}
                   srcDoc={formattedBody
                     .replace(/<script/g, '<!-- script')
                     .replace(/<\/script>/g, '</script -->')}
@@ -132,15 +178,29 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
               </TabsPanel>
       
               <TabsPanel value="as_code" className="space-y-4 max-w-full">
-                <pre className="w-full h-[160px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
+                <pre 
+                  className="w-full h-[160px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all"
+                  style={{ 
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                  }}
+                >
                   {formattedBody}
                 </pre>
               </TabsPanel>
-              </Tabs>
+            </Tabs>
           </div>
         ) : (
           <div className="relative max-w-full">
-            <pre className="w-full h-[200px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all">
+            <pre 
+              className="w-full h-[200px] p-4 rounded-md bg-secondary/50 font-mono text-sm overflow-auto whitespace-pre-wrap break-all"
+              style={{ 
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.1)'
+              }}
+            >
               {formattedBody}
             </pre>
           </div>

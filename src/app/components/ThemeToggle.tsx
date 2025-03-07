@@ -28,8 +28,17 @@ export function ThemeToggle() {
         size="xl"
         radius="xl"
         onClick={toggleColorScheme}
+        style={{
+          transition: 'all 0.3s ease',
+          transform: 'scale(1)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        }}
+        className="hover:scale-110 hover:shadow-lg active:scale-95"
       >
-        {colorScheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
+        {colorScheme === 'dark' ? 
+          <IconSun size={20} style={{ transition: 'transform 0.3s ease' }} className="animate-spin-slow" /> : 
+          <IconMoon size={20} style={{ transition: 'transform 0.3s ease' }} className="animate-spin-slow" />
+        }
       </ActionIcon>
     </Box>
   );

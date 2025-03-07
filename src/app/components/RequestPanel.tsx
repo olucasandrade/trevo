@@ -169,7 +169,15 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
   };
 
   return (
-    <Card className="p-6 glass-panel slide-in">
+    <Card 
+      className="p-6 glass-panel slide-in"
+      style={{ 
+        backdropFilter: 'blur(8px)',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+      }}
+    >
       <UrlBar
         url={url}
         method={method}
@@ -180,8 +188,26 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
         isLoading={isLoading}
       />
 
-      <Tabs defaultValue="params" className="w-full">
-        <TabsList className="grid grid-cols-3 mb-4">
+      <Tabs 
+        defaultValue="params" 
+        className="w-full"
+        styles={{
+          tab: {
+            transition: 'all 0.2s ease',
+            fontWeight: 500,
+            '&[data-active]': {
+              fontWeight: 600,
+            }
+          }
+        }}
+      >
+        <TabsList 
+          className="grid grid-cols-3 mb-4"
+          style={{
+            borderRadius: '8px',
+            overflow: 'hidden',
+          }}
+        >
           <TabsTab value="params">Params</TabsTab>
           <TabsTab value="headers">Headers</TabsTab>
           <TabsTab value="body">Body</TabsTab>
@@ -216,10 +242,22 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
         </TabsPanel>
       </Tabs>
 
-      <div className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-800">
+      <div 
+        className="flex justify-between items-center gap-2 mt-4 pt-4 border-t border-gray-800"
+        style={{
+          borderColor: 'rgba(255, 255, 255, 0.1)',
+        }}
+      >
         <Button
           variant="light"
           onClick={handleClear}
+          className="transition-all duration-300 hover:scale-105 active:scale-95"
+          styles={{
+            root: {
+              fontWeight: 500,
+              transition: 'all 0.3s ease',
+            }
+          }}
         >
           <div className='flex items-center gap-1'>
             Clear
@@ -229,6 +267,13 @@ export const RequestPanel = ({ onResponse, selectedRequest }: RequestPanelProps)
           variant="light"
           onClick={copyAsCurl}
           disabled={!validateCurrentRequest().valid}
+          className="transition-all duration-300 hover:scale-105 active:scale-95"
+          styles={{
+            root: {
+              fontWeight: 500,
+              transition: 'all 0.3s ease',
+            }
+          }}
         >
           <div className='flex items-center gap-1'>
             <IconTerminal2 className="h-4 w-4" />

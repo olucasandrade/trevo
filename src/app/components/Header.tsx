@@ -23,21 +23,49 @@ export function Header({ opened, toggle }: HeaderProps) {
 
   return (
     <>
-      <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937' }}>
+      <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
         <Group h="100%" px="md" justify="space-between">
           <Group>
-            <Burger opened={drawerOpened} onClick={open} hiddenFrom="sm" size="sm" />
-            <Link href="/" className="flex items-center gap-1">
+            <Burger 
+              opened={drawerOpened} 
+              onClick={open} 
+              hiddenFrom="sm" 
+              size="sm" 
+              transitionDuration={300}
+            />
+            <Link href="/" className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
               <IconClover size={32} />
-              <Title size={24}>Trevo</Title>
+              <Title size={24} style={{ letterSpacing: '-0.02em' }}>Trevo</Title>
             </Link>
           </Group>
-          <Group visibleFrom="sm">
+          <Group visibleFrom="sm" gap="md">
             <Link href="/">
-              <Button variant='subtle' fz={"md"}>{t('home')}</Button>
+              <Button 
+                variant='subtle' 
+                fz={"md"} 
+                style={{ 
+                  padding: '8px 16px',
+                  transition: 'all 0.2s ease',
+                  fontWeight: 500
+                }}
+                className="hover:scale-105"
+              >
+                {t('home')}
+              </Button>
             </Link>
             <a href="https://trevo.rest" target='_blank'>
-              <Button variant='subtle' fz={"md"}>{t('about')}</Button>
+              <Button 
+                variant='subtle' 
+                fz={"md"}
+                style={{ 
+                  padding: '8px 16px',
+                  transition: 'all 0.2s ease',
+                  fontWeight: 500
+                }}
+                className="hover:scale-105"
+              >
+                {t('about')}
+              </Button>
             </a>
             <Button
               component="a"
@@ -46,6 +74,12 @@ export function Header({ opened, toggle }: HeaderProps) {
               variant="subtle"
               leftSection={<IconBrandGithub size={18} />}
               fz={"md"}
+              style={{ 
+                padding: '8px 16px',
+                transition: 'all 0.2s ease',
+                fontWeight: 500
+              }}
+              className="hover:scale-105"
             >
               {t('github')}
             </Button>
@@ -54,13 +88,42 @@ export function Header({ opened, toggle }: HeaderProps) {
         </Group>
       </AppShell.Header>
       
-      <Drawer opened={drawerOpened} onClose={close} size="xs" padding="md">
-        <Stack>
+      <Drawer 
+        opened={drawerOpened} 
+        onClose={close} 
+        size="xs" 
+        padding="xl"
+        transitionProps={{ duration: 300, transition: 'slide-right' }}
+        style={{ backdropFilter: 'blur(4px)' }}
+      >
+        <Stack gap="lg">
           <Link href="/" onClick={() => toggleAndClose()}>
-            <Button variant='subtle' fullWidth>{t('home')}</Button>
+            <Button 
+              variant='subtle' 
+              fullWidth
+              style={{ 
+                padding: '12px 16px',
+                transition: 'all 0.2s ease',
+                fontWeight: 500
+              }}
+              className="hover:scale-105"
+            >
+              {t('home')}
+            </Button>
           </Link>
           <Link href="/about" onClick={() => toggleAndClose()}>
-            <Button variant='subtle' fullWidth>{t('about')}</Button>
+            <Button 
+              variant='subtle' 
+              fullWidth
+              style={{ 
+                padding: '12px 16px',
+                transition: 'all 0.2s ease',
+                fontWeight: 500
+              }}
+              className="hover:scale-105"
+            >
+              {t('about')}
+            </Button>
           </Link>
           <Button
             component="a"
@@ -69,6 +132,12 @@ export function Header({ opened, toggle }: HeaderProps) {
             variant="subtle"
             leftSection={<IconBrandGithub size={18} />}
             fullWidth
+            style={{ 
+              padding: '12px 16px',
+              transition: 'all 0.2s ease',
+              fontWeight: 500
+            }}
+            className="hover:scale-105"
           >
             {t('github')}
           </Button>
@@ -78,6 +147,13 @@ export function Header({ opened, toggle }: HeaderProps) {
               variant="subtle"
               leftSection={<IconHistory size={18} />}
               fz={"md"}
+              fullWidth
+              style={{ 
+                padding: '12px 16px',
+                transition: 'all 0.2s ease',
+                fontWeight: 500
+              }}
+              className="hover:scale-105"
             >
               Request history
           </Button>

@@ -1,6 +1,7 @@
 .list {
     position: relative;
     margin-bottom: var(--mantine-spacing-md);
+    padding: 1rem;
   }
   
   .indicator {
@@ -8,6 +9,12 @@
     border-radius: var(--mantine-radius-md);
     border: 1px solid var(--mantine-color-gray-2);
     box-shadow: var(--mantine-shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--mantine-shadow-md);
+    }
   
     @mixin dark {
       background-color: var(--mantine-color-dark-6);
@@ -18,15 +25,27 @@
   .tab {
     z-index: 1;
     font-weight: 500;
-    transition: color 100ms ease;
+    transition: all 0.2s ease;
     color: var(--mantine-color-gray-7);
+    padding: 0.75rem 1rem;
+    border-radius: var(--mantine-radius-sm);
+    
+    &:hover {
+      background-color: var(--mantine-color-gray-0);
+    }
   
     &[data-active] {
       color: var(--mantine-color-black);
+      font-weight: 600;
+      transform: translateY(-1px);
     }
   
     @mixin dark {
       color: var(--mantine-color-dark-1);
+  
+      &:hover {
+        background-color: var(--mantine-color-dark-5);
+      }
   
       &[data-active] {
         color: var(--mantine-color-white);
