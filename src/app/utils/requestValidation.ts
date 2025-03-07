@@ -1,6 +1,5 @@
 export const isValidUrl = (url: string) => {
   const pattern = /^(https?:\/\/)?((www\.)?|([\w-]+\.)+[\w-]+)(:\d+)?(\/[^\s]*)?$/;
-  console.log(pattern.test(url))
   return { valid: pattern.test(url), error: 'Invalid URL format' };
 }
 
