@@ -1,7 +1,7 @@
 import { IconClock, IconCopy, IconDatabase } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { formatSize } from '../services/apiService';
-import { Button, Card, Tabs, TabsList, TabsPanel, TabsTab } from "@mantine/core";
+import { ActionIcon, Card, Tabs, TabsList, TabsPanel, TabsTab } from "@mantine/core";
 import { toast } from "react-toastify";
 
 interface ResponsePanelProps {
@@ -132,15 +132,14 @@ export const ResponsePanel = ({ response }: ResponsePanelProps) => {
           </div>
         </div>
         
-        <Button
-          size="icon"
+        <ActionIcon
+          size="lg"
           variant="ghost"
           onClick={() => copyToClipboard(formattedBody)}
-          className="transition-all duration-300 hover:scale-110 active:scale-95"
           style={{ borderRadius: '50%' }}
         >
           <IconCopy className="h-4 w-4" />
-        </Button>
+        </ActionIcon>
       </div>
 
       <div className="space-y-4 max-w-full">
