@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react"
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 import { ToastContainer } from 'react-toastify';
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import MantineProvider from '../providers/MantineProvider';
 import QueryClientProvider from '../providers/QueryProvider';
@@ -37,16 +37,13 @@ const satoshi = localFont({
   ],
 });
 
-import { setRequestLocale } from 'next-intl/server';
-
-type LayoutParams = {
-  params: {
-    locale: string;
-  };
+type Props = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>
 };
 
-export async function generateMetadata({ params }: LayoutParams): Promise<Metadata> {
-  const { locale } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   
   return {
     title: {
@@ -104,15 +101,11 @@ export async function generateMetadata({ params }: LayoutParams): Promise<Metada
   };
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const { locale } = params;
+export default async function RootLayout({ children, params }: Props) {
+  const { locale } = await params;
+  
   setRequestLocale(locale);
+  
   const messages = await getMessages();
 
   return (
