@@ -39,8 +39,14 @@ const satoshi = localFont({
 
 import { setRequestLocale } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { children: React.ReactNode; params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
+type LayoutParams = {
+  params: {
+    locale: string;
+  };
+};
+
+export async function generateMetadata({ params }: LayoutParams): Promise<Metadata> {
+  const { locale } = params;
   
   return {
     title: {
@@ -98,10 +104,14 @@ export async function generateMetadata({ params }: { children: React.ReactNode; 
   };
 }
 
-export default async function RootLayout(
-  { children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }
-) {
-  const { locale } = await params;
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
+  const { locale } = params;
   setRequestLocale(locale);
   const messages = await getMessages();
 
