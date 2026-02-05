@@ -3,39 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@mantine/core": "^7.17.0",
-    "@mantine/hooks": "^7.17.0",
-    "@mantine/notifications": "^7.17.0",
-    "@next/bundle-analyzer": "^15.1.7",
-    "@tabler/icons-react": "^3.30.0",
-    "@tanstack/react-query": "^5.66.5",
-    "@vercel/analytics": "^1.5.0",
-    "axios": "^1.8.2",
-    "framer-motion": "^12.4.10",
-    "next": "15.2.3",
-    "next-intl": "^3.26.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-toastify": "^11.0.3",
-    "uuid": "^11.1.0"
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=@trevo/web",
+    "dev:desktop": "turbo dev --filter=@trevo/desktop",
+    "dev:landing": "turbo dev --filter=@trevo/landing",
+    "build": "turbo build",
+    "build:web": "turbo build --filter=@trevo/web",
+    "build:desktop": "turbo build --filter=@trevo/desktop",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean && rm -rf node_modules"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.7",
-    "postcss": "^8.5.2",
-    "postcss-preset-mantine": "^1.17.0",
-    "postcss-simple-vars": "^7.0.1",
-    "tailwindcss": "^3.4.1",
+    "turbo": "^2.3.0",
     "typescript": "^5"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=18"
   }
 }
