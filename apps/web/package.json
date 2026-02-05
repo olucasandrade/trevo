@@ -1,0 +1,47 @@
+{
+  "name": "@trevo/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mantine/core": "^7.17.0",
+    "@mantine/hooks": "^7.17.0",
+    "@mantine/notifications": "^7.17.0",
+    "@tabler/icons-react": "^3.30.0",
+    "@tanstack/react-query": "^5.66.5",
+    "@trevo/api-client": "workspace:*",
+    "@trevo/core": "workspace:*",
+    "@trevo/i18n": "workspace:*",
+    "@trevo/ui": "workspace:*",
+    "@vercel/analytics": "^1.5.0",
+    "axios": "^1.8.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.4.10",
+    "next": "^15.5.10",
+    "next-intl": "^3.26.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.3",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.1.7",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^15.5.10",
+    "postcss": "^8.5.2",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
