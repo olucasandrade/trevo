@@ -1,6 +1,18 @@
 // Theme
 export { theme } from './theme';
 
+// Theme System
+export {
+  ThemeProvider,
+  useTheme,
+  useThemeId,
+  useSetTheme,
+  themes,
+  getThemeById,
+  defaultTheme,
+} from './theme/index';
+export type { Theme, ThemeColors } from './theme/index';
+
 // Re-export commonly used Mantine components for convenience
 export {
   ActionIcon,
