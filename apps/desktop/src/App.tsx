@@ -29,6 +29,7 @@ import { RequestPanel } from './components/RequestPanel';
 import { ResponsePanel } from './components/ResponsePanel';
 import { EnvironmentPanel } from './components/EnvironmentPanel';
 import { ChainPanel } from './components/ChainPanel';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { useRequestHistory } from './hooks/useRequestHistory';
 import { useEnvironments } from './hooks/useEnvironments';
 
@@ -84,6 +85,7 @@ function App() {
                 </Badge>
               </Tooltip>
             )}
+            <ThemeSwitcher />
             <Tooltip label={colorScheme === 'dark' ? 'Light mode' : 'Dark mode'}>
               <ActionIcon
                 variant="subtle"
