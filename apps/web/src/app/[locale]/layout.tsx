@@ -11,6 +11,7 @@ import MantineProvider from '../providers/MantineProvider';
 import QueryClientProvider from '../providers/QueryProvider';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { Metadata } from 'next';
+import { ThemeProvider } from '@trevo/ui';
 
 const satoshi = localFont({
   src: [
@@ -44,7 +45,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  
+
   return {
     title: {
       template: '%s | Trevo - CORS Proxy API',
@@ -103,9 +104,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
-  
+
   setRequestLocale(locale);
-  
+
   const messages = await getMessages();
 
   return (
@@ -119,16 +120,18 @@ export default async function RootLayout({ children, params }: Props) {
         />
       </head>
       <body className={satoshi.className}>
-      <QueryClientProvider>
-      <NextIntlClientProvider messages={messages}>
-        <MantineProvider>
-          <ToastContainer theme='dark' autoClose={3000} />
-          <Analytics />
-          {children}
-          <ThemeToggle />
-        </MantineProvider>
-      </NextIntlClientProvider>
-      </QueryClientProvider>
+      <ThemeProvider defaultThemeId="dark-pro">
+        <QueryClientProvider>
+          <NextIntlClientProvider messages={messages}>
+            <MantineProvider>
+              <ToastContainer theme='dark' autoClose={3000} />
+              <Analytics />
+              {children}
+              <ThemeToggle />
+            </MantineProvider>
+          </NextIntlClientProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
       </body>
     </html>
   );

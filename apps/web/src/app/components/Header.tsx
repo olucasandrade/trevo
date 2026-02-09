@@ -6,6 +6,7 @@ import { useDisclosure } from '@mantine/hooks';
 import LocaleSwitcher from './LocaleSwitcher';
 import { SavedRequestsDrawer } from './request/SavedRequestsDrawer';
 import { SavedRequest } from '../types/requests';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface HeaderProps {
   opened?: boolean;
@@ -30,11 +31,11 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
       <AppShell.Header withBorder={true} style={{ borderColor: '#1f2937', boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}>
         <Group h="100%" px="md" justify="space-between">
           <Group>
-            <Burger 
-              opened={drawerOpened} 
-              onClick={open} 
-              hiddenFrom="sm" 
-              size="sm" 
+            <Burger
+              opened={drawerOpened}
+              onClick={open}
+              hiddenFrom="sm"
+              size="sm"
               transitionDuration={300}
             />
             <Link href="/" className="flex items-center gap-2 transition-transform duration-300 hover:scale-105">
@@ -47,7 +48,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               variant='subtle'
               leftSection={<IconBookmarks size={18} />}
               onClick={openSavedRequests}
-              style={{ 
+              style={{
                 padding: '8px 16px',
                 transition: 'all 0.2s ease',
                 fontWeight: 500
@@ -57,10 +58,10 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               Saved Requests
             </Button>
             <Link href="/">
-              <Button 
-                variant='subtle' 
-                fz={"md"} 
-                style={{ 
+              <Button
+                variant='subtle'
+                fz={"md"}
+                style={{
                   padding: '8px 16px',
                   transition: 'all 0.2s ease',
                   fontWeight: 500
@@ -71,10 +72,10 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               </Button>
             </Link>
             <a href="https://trevo.rest" target='_blank'>
-              <Button 
-                variant='subtle' 
+              <Button
+                variant='subtle'
                 fz={"md"}
-                style={{ 
+                style={{
                   padding: '8px 16px',
                   transition: 'all 0.2s ease',
                   fontWeight: 500
@@ -91,7 +92,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               variant="subtle"
               leftSection={<IconBrandGithub size={18} />}
               fz={"md"}
-              style={{ 
+              style={{
                 padding: '8px 16px',
                 transition: 'all 0.2s ease',
                 fontWeight: 500
@@ -100,25 +101,26 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
             >
               {t('github')}
             </Button>
+            <ThemeSwitcher />
             <LocaleSwitcher />
           </Group>
         </Group>
       </AppShell.Header>
-      
-      <Drawer 
-        opened={drawerOpened} 
-        onClose={close} 
-        size="xs" 
+
+      <Drawer
+        opened={drawerOpened}
+        onClose={close}
+        size="xs"
         padding="xl"
         transitionProps={{ duration: 300, transition: 'slide-right' }}
         style={{ backdropFilter: 'blur(4px)' }}
       >
         <Stack gap="lg">
           <Link href="/" onClick={() => toggleAndClose()}>
-            <Button 
-              variant='subtle' 
+            <Button
+              variant='subtle'
               fullWidth
-              style={{ 
+              style={{
                 padding: '12px 16px',
                 transition: 'all 0.2s ease',
                 fontWeight: 500
@@ -129,10 +131,10 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
             </Button>
           </Link>
           <a href="https://trevo.rest" onClick={() => toggleAndClose()}>
-            <Button 
-              variant='subtle' 
+            <Button
+              variant='subtle'
               fullWidth
-              style={{ 
+              style={{
                 padding: '12px 16px',
                 transition: 'all 0.2s ease',
                 fontWeight: 500
@@ -149,7 +151,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
             variant="subtle"
             leftSection={<IconBrandGithub size={18} />}
             fullWidth
-            style={{ 
+            style={{
               padding: '12px 16px',
               transition: 'all 0.2s ease',
               fontWeight: 500
@@ -165,7 +167,7 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
               leftSection={<IconHistory size={18} />}
               fz={"md"}
               fullWidth
-              style={{ 
+              style={{
                 padding: '12px 16px',
                 transition: 'all 0.2s ease',
                 fontWeight: 500
@@ -174,7 +176,10 @@ export function Header({ opened, toggle, onSelectRequest }: HeaderProps) {
             >
               Request history
           </Button>
-          <LocaleSwitcher />
+          <Group gap="xs" justify="center">
+            <ThemeSwitcher />
+            <LocaleSwitcher />
+          </Group>
         </Stack>
       </Drawer>
 
